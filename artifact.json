@@ -1,0 +1,48 @@
+{
+  "title": "Bunnies CN Log",
+  "slug": "bunnies-cn-log",
+  "pinned": true,
+  "preview": {
+    "type": "html",
+    "entry": "index.html"
+  },
+  "document": {
+    "format": "html_template_v1",
+    "templatePath": "template.html",
+    "generatedPreviewPath": "index.html",
+    "dataPath": "data.json",
+    "dataJson": {},
+    "sourceJson": {
+      "type": "local_file",
+      "input": {
+        "path": "data.json"
+      },
+      "outputMapping": {
+        "dataPaths": [
+          {
+            "from": "site",
+            "to": "site"
+          },
+          {
+            "from": "news",
+            "to": "news"
+          },
+          {
+            "from": "albums",
+            "to": "albums"
+          },
+          {
+            "from": "members",
+            "to": "members"
+          },
+          {
+            "from": "charts",
+            "to": "charts"
+          }
+        ],
+        "transform": "identity"
+      },
+      "refreshPermission": "manual_refresh_granted_for_read_only"
+    }
+  }
+}

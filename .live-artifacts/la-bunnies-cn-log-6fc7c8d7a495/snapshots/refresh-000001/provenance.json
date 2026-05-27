@@ -1,0 +1,39 @@
+{
+  "title": "Bunnies CN Log",
+  "generatedAt": "2026-05-26",
+  "audience": "中文粉丝",
+  "refreshModel": {
+    "type": "local_file",
+    "path": "data.json",
+    "summary": "Initial preview data is a compact local JSON file. Future refresh can update news, activities, album entries, and chart placeholders without redesigning template.html."
+  },
+  "references": [
+    {
+      "label": "NewJeans Japan Official Site",
+      "url": "https://www.newjeans.jp/",
+      "usedFor": "Recent news navigation, profile navigation, official link references"
+    },
+    {
+      "label": "NewJeans Official Discography",
+      "url": "https://www.newjeans.jp/discography",
+      "usedFor": "Album and single release list"
+    },
+    {
+      "label": "NewJeans profile page",
+      "url": "https://www.newjeans.jp/profile",
+      "usedFor": "Official profile navigation cross-check"
+    },
+    {
+      "label": "NewJeans overview article",
+      "url": "https://en.wikipedia.org/wiki/NewJeans",
+      "usedFor": "Context check for debut lineup and public status caveat"
+    }
+  ],
+  "transformationNotes": [
+    "Translated the user brief into a high-fidelity responsive fan hub with news, music, member profile, chart, and policy modules.",
+    "Kept preview data compact and avoided storing provider responses or private auth material.",
+    "Used original CSS shapes for album art placeholders instead of official cover images or member photos.",
+    "Added non-profit and copyright protection language in the product UI."
+  ],
+  "rightsBoundary": "This is an unofficial non-profit fan-site prototype. Official photos, album artwork, videos, trademarks, music, and names remain owned by their respective rights holders."
+}

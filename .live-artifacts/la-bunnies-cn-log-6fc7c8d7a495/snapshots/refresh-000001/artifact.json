@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "id": "la-bunnies-cn-log-6fc7c8d7a495",
+  "projectId": "3332a6ba-608d-4cd3-b9b4-3afe1687d421",
+  "title": "Bunnies CN Log",
+  "slug": "bunnies-cn-log",
+  "status": "active",
+  "pinned": true,
+  "preview": {
+    "type": "html",
+    "entry": "index.html"
+  },
+  "refreshStatus": "succeeded",
+  "createdAt": "2026-05-26T13:23:11.348Z",
+  "updatedAt": "2026-05-26T13:23:57.071Z",
+  "document": {
+    "format": "html_template_v1",
+    "templatePath": "template.html",
+    "generatedPreviewPath": "index.html",
+    "dataPath": "data.json",
+    "dataJson": {
+      "site": {
+        "title": "Bunnies CN Log",
+        "subtitle": "NewJeans 中文粉丝资料站",
+        "badge": "非官方 · 可刷新",
+        "refreshStatus": "LIVE DATA",
+        "lastUpdated": "2026-05-26",
+        "footerNote": "非官方、非盈利粉丝站点原型。NewJeans、成员姓名、音乐作品及相关商标归其权利方所有；本站仅作中文粉丝资料整理与学习交流。"
+      },
+      "hero": {
+        "headline": "把动态、音乐和成员资料放进同一个青春感资料站。",
+        "description": "为中文粉丝准备的 NewJeans 信息入口：首屏看最近动态，中段整理专辑发行，成员卡片保留出道阵容资料，榜单区预留后续刷新接口。",
+        "primaryAction": "浏览音乐",
+        "secondaryAction": "查看版权声明",
+        "panelTitle": "Bunnies mixtape",
+        "nowTitle": "本期聚焦：官方站新闻与专辑目录",
+        "nowMeta": "内容来自公开页面的人工整理，后续可替换为连接器或本地表格刷新。",
+        "nowTag": "CN FAN HUB"
+      },
+      "news": {
+        "title": "最近动态",
+        "note": "先接入官方站可公开访问的新闻条目，保持标题简短、来源清楚；未来可以把这里换成新闻表格或连接器刷新。",
+        "items": [
+          {
+            "day": "08",
+            "month": "2026.05",
+            "category": "活动",
+            "categoryKey": "live-event",
+            "title": "NewJeans Weverse Day, WeBirthday! 贩售决定",
+            "summary": "日本官方站发布 LIVE/EVENT 类条目，适合放进活动入口与粉丝提醒。",
+            "source": "newjeans.jp"
+          },
+          {
+            "day": "22",
+            "month": "2026.04",
+            "category": "公告",
+            "categoryKey": "notice",
+            "title": "黄金周配送与咨询窗口休业说明",
+            "summary": "偏运营类公告，站点中作为服务通知留档，不参与应援或商业导流。",
+            "source": "newjeans.jp"
+          },
+          {
+            "day": "09",
+            "month": "2026.04",
+            "category": "Bunnies",
+            "categoryKey": "bunnies",
+            "title": "NewJeans Japan official site 更新开放",
+            "summary": "官方站更新开放，适合作为粉丝站来源目录和资料校对入口。",
+            "source": "newjeans.jp"
+          }
+        ]
+      },
+      "albums": {
+        "title": "音乐与专辑展示",
+        "note": "按官方 Discography 页面整理发行时间，封面用原创几何占位，不复刻官方专辑图或受版权保护素材。",
+        "items": [
+          {
+            "code": "JP01",
+            "kind": "Single",
+            "kindKey": "single",
+            "title": "Supernatural",
+            "release": "2024.06.21 · Japanese single",
+            "tracks": "收录 Supernatural / Right Now；适合作为日本出道节点展示。"
+          },
+          {
+            "code": "KR24",
+            "kind": "Single",
+            "kindKey": "single",
+            "title": "How Sweet",
+            "release": "2024.05.24 · Korea",
+            "tracks": "收录 How Sweet / Bubble Gum；作为 2024 回归资料卡。"
+          },
+          {
+            "code": "EP02",
+            "kind": "EP",
+            "kindKey": "ep",
+            "title": "Get Up",
+            "release": "2023.07.21 · 2nd EP",
+            "tracks": "包含 New Jeans, Super Shy, ETA, Cool With You, Get Up, ASAP。"
+          },
+          {
+            "code": "S23",
+            "kind": "Single",
+            "kindKey": "single",
+            "title": "OMG",
+            "release": "2023.01.02 · Korea",
+            "tracks": "包含 Ditto / OMG；适合作为入坑歌单入口。"
+          },
+          {
+            "code": "EP01",
+            "kind": "EP",
+            "kindKey": "ep",
+            "title": "New Jeans",
+            "release": "2022.08.01 · 1st EP",
+            "tracks": "包含 Attention, Hype Boy, Cookie, Hurt；出道期资料卡。"
+          }
+        ]
+      },
+      "members": {
+        "title": "成员资料卡",
+        "note": "这里保留公开出道阵容的中文粉丝资料卡。成员现况、合约和官方资料请以官方页面与权威报道为准，本站不替代官方口径。",
+        "status": "出道阵容资料",
+        "items": [
+          {
+            "initial": "M",
+            "name": "MINJI",
+            "line": "资料卡预留：中文昵称、舞台关键词、代表舞台和粉丝整理索引。",
+            "badge": "PROFILE"
+          },
+          {
+            "initial": "H",
+            "name": "HANNI",
+            "line": "资料卡预留：声线印象、舞台片段、采访摘录与公开链接。",
+            "badge": "PROFILE"
+          },
+          {
+            "initial": "D",
+            "name": "DANIELLE",
+            "line": "资料卡预留：公开出道阵容条目，当前官方资料请以官方站为准。",
+            "badge": "DEBUT LINE"
+          },
+          {
+            "initial": "H",
+            "name": "HAERIN",
+            "line": "资料卡预留：舞台关键词、音乐视频索引和粉丝整理备注。",
+            "badge": "PROFILE"
+          },
+          {
+            "initial": "H",
+            "name": "HYEIN",
+            "line": "资料卡预留：舞台关键词、活动记录和公开资料索引。",
+            "badge": "PROFILE"
+          }
+        ]
+      },
+      "charts": {
+        "title": "榜单与活动刷新位",
+        "note": "不编造实时成绩。先把榜单模块做成可刷新结构，之后可以接 Spotify、Billboard、YouTube 或手动表格。",
+        "items": [
+          {
+            "title": "榜单快照",
+            "status": "待接入",
+            "value": "—",
+            "note": "预留单曲排名、更新时间和来源字段；没有授权数据前保持空值。"
+          },
+          {
+            "title": "活动日历",
+            "status": "可更新",
+            "value": "3 条",
+            "note": "当前示例来自官方站新闻条目，后续可拆成活动开始时间、地点和提醒状态。"
+          },
+          {
+            "title": "资料完整度",
+            "status": "进行中",
+            "value": "5 张",
+            "note": "成员资料卡先保留结构，具体中文资料应继续人工校对后补充。"
+          }
+        ]
+      },
+      "policy": {
+        "title": "非盈利与版权保护声明",
+        "note": "粉丝站必须清楚表达边界，避免让用户误以为这是官方站点或商业项目。",
+        "nonProfitTitle": "非盈利声明",
+        "nonProfitText": "本站为中文粉丝自发整理的非官方、非盈利资料站原型，不售卖周边、不提供付费会员、不代表 ADOR、HYBE、NewJeans 或任何官方平台。",
+        "copyrightTitle": "版权保护",
+        "copyrightText": "音乐、影像、成员姓名、官方图片、商标与专辑视觉均归其合法权利方所有。本站不直接转载受版权保护的官方图片或音视频，仅提供文字资料整理、公开来源索引与原创视觉占位。"
+      }
+    },
+    "sourceJson": {
+      "type": "local_file",
+      "input": {
+        "path": "data.json"
+      },
+      "refreshPermission": "manual_refresh_granted_for_read_only",
+      "outputMapping": {
+        "dataPaths": [
+          {
+            "from": "site",
+            "to": "site"
+          },
+          {
+            "from": "news",
+            "to": "news"
+          },
+          {
+            "from": "albums",
+            "to": "albums"
+          },
+          {
+            "from": "members",
+            "to": "members"
+          },
+          {
+            "from": "charts",
+            "to": "charts"
+          }
+        ],
+        "transform": "identity"
+      }
+    }
+  },
+  "createdByRunId": "4cacd726-74b7-453b-941b-91ab2159056c",
+  "lastRefreshedAt": "2026-05-26T13:23:57.071Z"
+}

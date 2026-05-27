@@ -1,0 +1,1250 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bunnies CN Log</title>
+  <style>
+:root {
+  /* ─── Surface ─────────────────────────────────────────────────────
+   * Snow white canvas with Eel as the section-break tone. Pure optical
+   * clarity — Duolingo never tints the page itself, only the chrome. */
+  --bg: #ffffff;             /* Snow — primary background, the page canvas */
+  --surface: #f7f7f7;        /* Eel — section break, secondary surface, lesson row */
+  --surface-warm: var(--surface); /* alias — palette has no third (warm) surface tier */
+
+  /* ─── Foreground ──────────────────────────────────────────────────
+   * Three real text tiers: Eel Black for primary, Wolf for secondary,
+   * Hare for tertiary. Each tier carries clear, child-readable contrast. */
+  --fg: #3c3c3c;             /* Eel Black — primary text, headings, button labels */
+  --fg-2: var(--fg);         /* alias — single primary text weight throughout */
+  --muted: #777777;          /* Wolf — secondary text, captions, dividers */
+  --meta: #afafaf;           /* Hare — tertiary metadata, placeholder, disabled */
+
+  /* ─── Border ──────────────────────────────────────────────────────
+   * Swan grey at thick 2–3px on most surfaces. Borders are visual,
+   * never hairlines — they read as part of the chunky aesthetic. */
+  --border: #e5e5e5;         /* Swan — standard 2px border, card edge */
+  --border-soft: var(--border); /* alias — single border tier (no inner-row separation) */
+
+  /* ─── Accent ──────────────────────────────────────────────────────
+   * Owl Green — the brand IS this green. Used liberally in 30%+ of the
+   * surface for buttons, progress bars, success states, brand chrome. */
+  --accent: #58cc02;
+  --accent-on: #ffffff;
+  --accent-hover: #89e219;   /* Owl Green Light — hover state, soft fills */
+  --accent-active: #58a700;  /* Owl Green Deep — pressed state, the chunky shadow color */
+
+  /* ─── Semantic ────────────────────────────────────────────────────
+   * Success IS owl green — DESIGN.md: "primary CTA, correct answer" are
+   * the same affordance. Bee Yellow warns; Cardinal Red marks wrong. */
+  --success: #58cc02;        /* Owl Green — "correct answer" is the brand */
+  --warn: #ffc800;           /* Bee Yellow — pro badge, achievement glow */
+  --danger: #ff4b4b;         /* Cardinal Red — wrong answer, life lost */
+
+  /* ─── Typography ──────────────────────────────────────────────────
+   * Feather Bold (rounded display) drives chrome and headings; Mona Sans
+   * carries body. Default weight is 800 — Duolingo never whispers. */
+  --font-display: "Feather Bold", "DIN Round Pro", "Helvetica Neue", sans-serif;
+  --font-body: "Mona Sans", "Helvetica Neue", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+
+  /* Type scale — DESIGN.md §3. Display 56px is +25–40% above typical
+   * product brands; the ladder favors round whole-pixel sizes. */
+  --text-xs: 12px;           /* Tiny utility, progress numerals */
+  --text-sm: 13px;           /* Caption — XP counter, metadata */
+  --text-base: 15px;         /* Body — standard prose */
+  --text-lg: 18px;           /* H3 / lesson row title / featured body */
+  --text-xl: 24px;           /* H2 — section heading */
+  --text-2xl: 32px;          /* H1 — page title */
+  --text-3xl: 40px;          /* Sub-display — hero secondary, marketing eyebrow */
+  --text-4xl: 56px;          /* Display — onboarding hero, never timid */
+
+  --leading-body: 1.5;
+  --leading-tight: 1.15;     /* Headings — slight breathing under big rounded faces */
+  --tracking-display: -0.01em; /* ≈ -0.56px at 56px — confident, not condensed */
+
+  /* ─── Spacing ─────────────────────────────────────────────────────
+   * 4px base unit (DESIGN.md §5): 4, 8, 12, 16, 20, 24, 32, 48. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  /* Section rhythm — generous on desktop, tight on phone so the lesson
+   * tree column reads as a continuous flow rather than chunked pages. */
+  --section-y-desktop: 80px;
+  --section-y-tablet: 56px;
+  --section-y-phone: 40px;
+
+  /* ─── Radius ──────────────────────────────────────────────────────
+   * Pill-and-rounded everywhere. Cards 16px (DESIGN.md §4), buttons +
+   * inputs 12px, chips and progress bars 9999px — friendly forever. */
+  --radius-sm: 12px;         /* Inputs, buttons — friendly compact corners */
+  --radius-md: 16px;         /* Cards, lesson tiles — primary signature */
+  --radius-lg: 20px;         /* Featured containers, modals */
+  --radius-pill: 9999px;     /* Chips, progress bars, avatars */
+
+  /* ─── Elevation ───────────────────────────────────────────────────
+   * Chunky 4px bottom-shadow IS Duolingo. Buttons and cards cast a hard
+   * offset shadow that reads as a 3D button waiting to be pressed. The
+   * raised value pairs with translateY(4px) on :active to "press" it. */
+  --elev-flat: none;
+  --elev-ring: 0 0 0 2px var(--border); /* 2px ring matches the chunky border weight */
+  --elev-raised: 0 4px 0 #d7d7d7; /* Hard tactile shadow — the press affordance */
+
+  /* ─── Focus ring ──────────────────────────────────────────────────
+   * Eel Blue 20% tint (DESIGN.md §4 inputs) — playful contrast against
+   * the ambient owl-green brand; signals "you can interact with this". */
+  --focus-ring: 0 0 0 3px rgba(28, 176, 246, 0.2);
+
+  /* ─── Motion ──────────────────────────────────────────────────────
+   * 180ms button press, 320ms skill-node unlock; back-out spring with
+   * slight overshoot (DESIGN.md §6). Every state change feels gamified. */
+  --motion-fast: 180ms;
+  --motion-base: 320ms;
+  --ease-standard: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ─── Layout ──────────────────────────────────────────────────────
+   * 1080px container (DESIGN.md §5) — narrower than a SaaS deck because
+   * Duolingo content reads vertically as a focused lesson tree column. */
+  --container-max: 1080px;
+  --container-gutter-desktop: 24px;
+  --container-gutter-tablet: 20px;
+  --container-gutter-phone: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top left, color-mix(in oklab, var(--accent) 18%, transparent) 0 180px, transparent 181px),
+    linear-gradient(180deg, var(--bg), var(--surface));
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-shell {
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+.container {
+  width: min(var(--container-max), calc(100% - (var(--container-gutter-desktop) * 2)));
+  margin: 0 auto;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  border-bottom: 2px solid var(--border);
+  backdrop-filter: blur(16px);
+}
+
+.topbar-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 76px;
+}
+
+.brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--accent-active);
+  border-bottom-width: 5px;
+  border-radius: var(--radius-md);
+  background: var(--accent);
+  color: var(--accent-on);
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+.brand-text {
+  min-width: 0;
+}
+
+.brand-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.brand-subtitle {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.nav a,
+.pill-button,
+.filter-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  transition: transform var(--motion-fast) var(--ease-standard), border-color var(--motion-fast), color var(--motion-fast), background var(--motion-fast);
+}
+
+.nav a:hover,
+.filter-button:hover,
+.pill-button:hover {
+  border-color: var(--meta);
+  color: var(--fg);
+  transform: translateY(-1px);
+}
+
+.pill-button.primary,
+.filter-button.is-active {
+  border-color: var(--accent-active);
+  background: var(--accent);
+  color: var(--accent-on);
+}
+
+.pill-button:active,
+.filter-button:active,
+.nav a:active {
+  transform: translateY(4px);
+  border-bottom-width: 2px;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+.hero {
+  padding: var(--space-12) 0 var(--section-y-tablet);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.hero-copy {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--accent-active);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--accent) 16%, var(--bg));
+  color: var(--accent-active);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  max-width: 10ch;
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  line-height: var(--leading-tight);
+}
+
+.hero-lead {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: var(--leading-body);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.hero-panel {
+  position: relative;
+  border: 2px solid var(--border);
+  border-bottom-width: 5px;
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+  box-shadow: var(--elev-raised);
+  overflow: hidden;
+}
+
+.cassette {
+  padding: var(--space-6);
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--accent) 20%, var(--bg)), var(--bg) 45%, color-mix(in oklab, var(--warn) 22%, var(--bg))),
+    var(--bg);
+}
+
+.cassette-header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.cassette-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--fg);
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 800;
+}
+
+.live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+}
+
+.tape-window {
+  display: grid;
+  grid-template-columns: 86px 1fr 86px;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-4);
+  border: 2px solid var(--fg);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--surface) 80%, var(--bg));
+}
+
+.reel {
+  aspect-ratio: 1;
+  border: 12px solid var(--bg);
+  border-radius: var(--radius-pill);
+  background:
+    conic-gradient(var(--accent), var(--warn), var(--danger), var(--accent));
+  box-shadow: inset 0 0 0 2px var(--border);
+}
+
+.track-strip {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.track-line {
+  height: 14px;
+  border-radius: var(--radius-pill);
+  background: var(--fg);
+}
+
+.track-line.short {
+  width: 64%;
+  background: var(--muted);
+}
+
+.now-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-3);
+  align-items: center;
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+}
+
+.now-title {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+}
+
+.now-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.section {
+  padding: var(--section-y-tablet) 0;
+  border-top: 2px solid var(--border);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-6);
+  align-items: end;
+  margin-bottom: var(--space-6);
+}
+
+.section-kicker {
+  margin-bottom: var(--space-2);
+  color: var(--accent-active);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  line-height: var(--leading-tight);
+}
+
+.section-note {
+  max-width: 52ch;
+  margin: var(--space-3) 0 0;
+  color: var(--muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+}
+
+.update-chip {
+  align-self: start;
+  display: inline-flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+.news-layout {
+  display: block;
+}
+
+.filter-stack {
+  position: sticky;
+  top: 100px;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.news-list {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.news-card,
+.album-card,
+.member-card,
+.rank-card,
+.notice-card {
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  box-shadow: var(--elev-flat);
+}
+
+.news-card {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr) auto;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-4);
+}
+
+.date-tile {
+  display: grid;
+  place-items: center;
+  min-height: 92px;
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--accent) 16%, var(--bg));
+  color: var(--accent-active);
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-align: center;
+}
+
+.date-tile span:first-child {
+  font-size: var(--text-2xl);
+  line-height: 1;
+}
+
+.date-tile span:last-child {
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+}
+
+.tag {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--warn) 28%, var(--bg));
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 800;
+}
+
+.news-title {
+  margin: var(--space-2) 0 var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.news-summary {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+}
+
+.source-pill {
+  white-space: nowrap;
+  color: var(--meta);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+.albums-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.album-card {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.album-cover {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 2px solid var(--fg);
+  border-bottom-width: 5px;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--accent) 28%, var(--bg)), color-mix(in oklab, var(--warn) 28%, var(--bg)));
+  overflow: hidden;
+}
+
+.album-cover::before,
+.album-cover::after {
+  content: "";
+  position: absolute;
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+}
+
+.album-cover::before {
+  width: 62%;
+  height: 62%;
+  border: 2px solid var(--border);
+}
+
+.album-cover::after {
+  width: 22%;
+  height: 22%;
+  border: 2px solid var(--fg);
+}
+
+.album-code {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--fg);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+.album-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+}
+
+.album-meta,
+.album-tracks {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+}
+
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.member-card {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.member-initial {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--fg);
+  border-bottom-width: 5px;
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--accent) 18%, var(--bg));
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+}
+
+.member-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+}
+
+.member-line {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+}
+
+.rank-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.rank-card {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.rank-top {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.rank-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+}
+
+.rank-value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+}
+
+.rank-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+}
+
+.progress-track {
+  height: 16px;
+  border-radius: var(--radius-pill);
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 64%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.notice-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  gap: var(--space-4);
+}
+
+.notice-card {
+  padding: var(--space-5);
+}
+
+.notice-card strong {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+}
+
+.notice-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+}
+
+.copy-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  margin-top: var(--space-4);
+}
+
+.copy-status {
+  color: var(--accent-active);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+.footer {
+  padding: var(--space-8) 0;
+  border-top: 2px solid var(--border);
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.footer p {
+  margin: 0;
+  color: color-mix(in oklab, var(--bg) 78%, var(--fg));
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+
+.footer-links a {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+@media (max-width: 980px) {
+  .container {
+    width: min(var(--container-max), calc(100% - (var(--container-gutter-tablet) * 2)));
+  }
+
+  .topbar-inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .nav {
+    grid-column: 1 / -1;
+    justify-content: start;
+    overflow-x: auto;
+    padding-bottom: var(--space-3);
+  }
+
+  .hero-grid,
+  .news-layout,
+  .notice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-stack {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .albums-grid,
+  .rank-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .members-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: min(var(--container-max), calc(100% - (var(--container-gutter-phone) * 2)));
+  }
+
+  .hero {
+    padding-top: var(--space-8);
+  }
+
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .hero-lead {
+    font-size: var(--text-base);
+  }
+
+  .topbar-inner {
+    min-height: 68px;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+  }
+
+  .section-head,
+  .news-card,
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: var(--section-y-phone) 0;
+  }
+
+  .source-pill {
+    white-space: normal;
+  }
+
+  .albums-grid,
+  .members-grid,
+  .rank-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tape-window {
+    grid-template-columns: 64px 1fr 64px;
+  }
+
+  .footer-links {
+    justify-content: flex-start;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand-lockup" href="#top" aria-label="Bunnies CN Log">
+          <span class="brand-mark">NJ</span>
+          <span class="brand-text">
+            <span class="brand-name">Bunnies CN Log</span>
+            <span class="brand-subtitle">NewJeans 中文粉丝资料站</span>
+          </span>
+        </a>
+        <nav class="nav" id="siteNav" aria-label="站点导航">
+          <a href="#news">动态</a>
+          <a href="#music">音乐</a>
+          <a href="#members">成员</a>
+          <a href="#charts">榜单</a>
+          <a href="#notice">声明</a>
+        </nav>
+        <a class="pill-button primary" href="#news">看更新</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">非官方 · 可刷新</span>
+            <h1>把动态、音乐和成员资料放进同一个青春感资料站。</h1>
+            <p class="hero-lead">为中文粉丝准备的 NewJeans 信息入口：首屏看最近动态，中段整理专辑发行，成员卡片保留出道阵容资料，榜单区预留后续刷新接口。</p>
+            <div class="hero-actions" aria-label="主要操作">
+              <a class="pill-button primary" href="#music">浏览音乐</a>
+              <a class="pill-button" href="#notice">查看版权声明</a>
+            </div>
+          </div>
+
+          <aside class="hero-panel" aria-label="站点更新摘要">
+            <div class="cassette">
+              <div class="cassette-header">
+                <div class="cassette-title">Bunnies mixtape</div>
+                <div class="live-badge"><span class="live-dot"></span>LIVE DATA</div>
+              </div>
+              <div class="tape-window" aria-hidden="true">
+                <div class="reel"></div>
+                <div class="track-strip">
+                  <div class="track-line"></div>
+                  <div class="track-line short"></div>
+                  <div class="track-line"></div>
+                </div>
+                <div class="reel"></div>
+              </div>
+              <div class="now-row">
+                <div>
+                  <p class="now-title">本期聚焦：官方站新闻与专辑目录</p>
+                  <p class="now-meta">内容来自公开页面的人工整理，后续可替换为连接器或本地表格刷新。</p>
+                </div>
+                <span class="tag">CN FAN HUB</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="news">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">NEWS FEED</p>
+              <h2>最近动态</h2>
+              <p class="section-note">先接入官方站可公开访问的新闻条目，保持标题简短、来源清楚；未来可以把这里换成新闻表格或连接器刷新。</p>
+            </div>
+            <div class="update-chip">上次更新 2026-05-26</div>
+          </div>
+
+          <div class="news-layout">
+            <div class="news-list" id="newsList">
+              <article class="news-card" data-news-item data-category="live-event">
+                <div class="date-tile">
+                  <span>08</span>
+                  <span>2026.05</span>
+                </div>
+                <div>
+                  <span class="tag">活动</span>
+                  <h3 class="news-title">NewJeans Weverse Day, WeBirthday! 贩售决定</h3>
+                  <p class="news-summary">日本官方站发布 LIVE/EVENT 类条目，适合放进活动入口与粉丝提醒。</p>
+                </div>
+                <span class="source-pill">newjeans.jp</span>
+              </article>
+              <article class="news-card" data-news-item data-category="notice">
+                <div class="date-tile">
+                  <span>22</span>
+                  <span>2026.04</span>
+                </div>
+                <div>
+                  <span class="tag">公告</span>
+                  <h3 class="news-title">黄金周配送与咨询窗口休业说明</h3>
+                  <p class="news-summary">偏运营类公告，站点中作为服务通知留档，不参与应援或商业导流。</p>
+                </div>
+                <span class="source-pill">newjeans.jp</span>
+              </article>
+              <article class="news-card" data-news-item data-category="bunnies">
+                <div class="date-tile">
+                  <span>09</span>
+                  <span>2026.04</span>
+                </div>
+                <div>
+                  <span class="tag">Bunnies</span>
+                  <h3 class="news-title">NewJeans Japan official site 更新开放</h3>
+                  <p class="news-summary">官方站更新开放，适合作为粉丝站来源目录和资料校对入口。</p>
+                </div>
+                <span class="source-pill">newjeans.jp</span>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="music">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">DISCOGRAPHY</p>
+              <h2>音乐与专辑展示</h2>
+              <p class="section-note">按官方 Discography 页面整理发行时间，封面用原创几何占位，不复刻官方专辑图或受版权保护素材。</p>
+            </div>
+          </div>
+
+          <div class="albums-grid" id="albumGrid">
+            <article class="album-card" data-album-item data-kind="single">
+              <div class="album-cover">
+                <span class="album-code">JP01</span>
+              </div>
+              <div>
+                <span class="tag">Single</span>
+                <h3 class="album-title">Supernatural</h3>
+              </div>
+              <p class="album-meta">2024.06.21 · Japanese single</p>
+              <p class="album-tracks">收录 Supernatural / Right Now；适合作为日本出道节点展示。</p>
+            </article>
+            <article class="album-card" data-album-item data-kind="single">
+              <div class="album-cover">
+                <span class="album-code">KR24</span>
+              </div>
+              <div>
+                <span class="tag">Single</span>
+                <h3 class="album-title">How Sweet</h3>
+              </div>
+              <p class="album-meta">2024.05.24 · Korea</p>
+              <p class="album-tracks">收录 How Sweet / Bubble Gum；作为 2024 回归资料卡。</p>
+            </article>
+            <article class="album-card" data-album-item data-kind="ep">
+              <div class="album-cover">
+                <span class="album-code">EP02</span>
+              </div>
+              <div>
+                <span class="tag">EP</span>
+                <h3 class="album-title">Get Up</h3>
+              </div>
+              <p class="album-meta">2023.07.21 · 2nd EP</p>
+              <p class="album-tracks">包含 New Jeans, Super Shy, ETA, Cool With You, Get Up, ASAP。</p>
+            </article>
+            <article class="album-card" data-album-item data-kind="single">
+              <div class="album-cover">
+                <span class="album-code">S23</span>
+              </div>
+              <div>
+                <span class="tag">Single</span>
+                <h3 class="album-title">OMG</h3>
+              </div>
+              <p class="album-meta">2023.01.02 · Korea</p>
+              <p class="album-tracks">包含 Ditto / OMG；适合作为入坑歌单入口。</p>
+            </article>
+            <article class="album-card" data-album-item data-kind="ep">
+              <div class="album-cover">
+                <span class="album-code">EP01</span>
+              </div>
+              <div>
+                <span class="tag">EP</span>
+                <h3 class="album-title">New Jeans</h3>
+              </div>
+              <p class="album-meta">2022.08.01 · 1st EP</p>
+              <p class="album-tracks">包含 Attention, Hype Boy, Cookie, Hurt；出道期资料卡。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="members">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">PROFILE CARDS</p>
+              <h2>成员资料卡</h2>
+              <p class="section-note">这里保留公开出道阵容的中文粉丝资料卡。成员现况、合约和官方资料请以官方页面与权威报道为准，本站不替代官方口径。</p>
+            </div>
+            <div class="update-chip">出道阵容资料</div>
+          </div>
+
+          <div class="members-grid">
+            <article class="member-card">
+              <div class="member-initial">M</div>
+              <h3 class="member-name">MINJI</h3>
+              <p class="member-line">资料卡预留：中文昵称、舞台关键词、代表舞台和粉丝整理索引。</p>
+              <span class="tag">PROFILE</span>
+            </article>
+            <article class="member-card">
+              <div class="member-initial">H</div>
+              <h3 class="member-name">HANNI</h3>
+              <p class="member-line">资料卡预留：声线印象、舞台片段、采访摘录与公开链接。</p>
+              <span class="tag">PROFILE</span>
+            </article>
+            <article class="member-card">
+              <div class="member-initial">D</div>
+              <h3 class="member-name">DANIELLE</h3>
+              <p class="member-line">资料卡预留：公开出道阵容条目，当前官方资料请以官方站为准。</p>
+              <span class="tag">DEBUT LINE</span>
+            </article>
+            <article class="member-card">
+              <div class="member-initial">H</div>
+              <h3 class="member-name">HAERIN</h3>
+              <p class="member-line">资料卡预留：舞台关键词、音乐视频索引和粉丝整理备注。</p>
+              <span class="tag">PROFILE</span>
+            </article>
+            <article class="member-card">
+              <div class="member-initial">H</div>
+              <h3 class="member-name">HYEIN</h3>
+              <p class="member-line">资料卡预留：舞台关键词、活动记录和公开资料索引。</p>
+              <span class="tag">PROFILE</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="charts">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">LIVE BOARD</p>
+              <h2>榜单与活动刷新位</h2>
+              <p class="section-note">不编造实时成绩。先把榜单模块做成可刷新结构，之后可以接 Spotify、Billboard、YouTube 或手动表格。</p>
+            </div>
+          </div>
+
+          <div class="rank-grid">
+            <article class="rank-card">
+              <div class="rank-top">
+                <h3 class="rank-title">榜单快照</h3>
+                <span class="tag">待接入</span>
+              </div>
+              <p class="rank-value">—</p>
+              <div class="progress-track" aria-hidden="true"><div class="progress-fill"></div></div>
+              <p class="rank-note">预留单曲排名、更新时间和来源字段；没有授权数据前保持空值。</p>
+            </article>
+            <article class="rank-card">
+              <div class="rank-top">
+                <h3 class="rank-title">活动日历</h3>
+                <span class="tag">可更新</span>
+              </div>
+              <p class="rank-value">3 条</p>
+              <div class="progress-track" aria-hidden="true"><div class="progress-fill"></div></div>
+              <p class="rank-note">当前示例来自官方站新闻条目，后续可拆成活动开始时间、地点和提醒状态。</p>
+            </article>
+            <article class="rank-card">
+              <div class="rank-top">
+                <h3 class="rank-title">资料完整度</h3>
+                <span class="tag">进行中</span>
+              </div>
+              <p class="rank-value">5 张</p>
+              <div class="progress-track" aria-hidden="true"><div class="progress-fill"></div></div>
+              <p class="rank-note">成员资料卡先保留结构，具体中文资料应继续人工校对后补充。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="notice">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">FAN SITE POLICY</p>
+              <h2>非盈利与版权保护声明</h2>
+              <p class="section-note">粉丝站必须清楚表达边界，避免让用户误以为这是官方站点或商业项目。</p>
+            </div>
+          </div>
+
+          <div class="notice-grid">
+            <article class="notice-card">
+              <strong>非盈利声明</strong>
+              <p>本站为中文粉丝自发整理的非官方、非盈利资料站原型，不售卖周边、不提供付费会员、不代表 ADOR、HYBE、NewJeans 或任何官方平台。</p>
+            </article>
+            <article class="notice-card">
+              <strong>版权保护</strong>
+              <p>音乐、影像、成员姓名、官方图片、商标与专辑视觉均归其合法权利方所有。本站不直接转载受版权保护的官方图片或音视频，仅提供文字资料整理、公开来源索引与原创视觉占位。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>非官方、非盈利粉丝站点原型。NewJeans、成员姓名、音乐作品及相关商标归其权利方所有；本站仅作中文粉丝资料整理与学习交流。</p>
+        <div class="footer-links" aria-label="官方参考链接">
+          <a href="https://www.newjeans.jp/" target="_blank" rel="noreferrer">官方站</a>
+          <a href="https://www.newjeans.jp/discography" target="_blank" rel="noreferrer">Discography</a>
+          <a href="https://www.newjeans.jp/profile" target="_blank" rel="noreferrer">Profile</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
